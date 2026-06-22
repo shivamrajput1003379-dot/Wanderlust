@@ -1,0 +1,130 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row mt-4">
+    <div class="col-10 col-md-8 offset-md-2 offset-1">
+        <h3 class="mb-4 text-center">Create a New Listing</h3>
+        
+        <form 
+            action="/listings" 
+            method="POST" 
+            novalidate 
+            class="needs-validation card p-4 shadow-sm bg-body rounded"
+            enctype="multipart/form-data"
+        >
+
+            <div class="mb-3">
+                <label for="title" class="form-label fw-bold">Title</label>
+                <input
+                    id="title"
+                    type="text"
+                    name="listing[title]"
+                    class="form-control"
+                    placeholder="Enter a catchy title"
+                    required
+                >
+                <div class="valid-feedback">Title looks good!</div>
+                <div class="invalid-feedback">Please enter a Title</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label fw-bold">Description</label>
+                <textarea
+                    id="description"
+                    name="listing[description]"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Describe your amazing place..."
+                    required
+                ></textarea>
+                <div class="valid-feedback">Description looks good!</div>
+                <div class="invalid-feedback">Please enter a short description</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label fw-bold">Upload Listing Image</label>
+                <input
+                    id="image"
+                    type="file"
+                    name="listing[image]"
+                    class="form-control"
+                >
+            </div>
+           
+            <div class="row">
+                <div class="mb-3 col-md-5">
+                    <label for="price" class="form-label fw-bold">Price per Night</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₹</span>
+                        <input
+                            id="price"
+                            type="number"
+                            name="listing[price]"
+                            class="form-control"
+                            placeholder="1200"
+                            required
+                        >
+                        <div class="valid-feedback">Price is valid!</div>
+                        <div class="invalid-feedback">Price should be a valid number</div>
+                    </div>
+                </div>
+                
+                <div class="mb-3 col-md-7">
+                    <label for="country" class="form-label fw-bold">Country</label>
+                    <input
+                        id="country"
+                        type="text"
+                        name="listing[country]"
+                        class="form-control"
+                        placeholder="India"
+                        required
+                    >
+                    <div class="valid-feedback">Country looks good!</div>
+                    <div class="invalid-feedback">Country name should be valid</div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="locationInput" class="form-label fw-bold">Location</label>
+                
+                <div class="input-group mb-3">
+                    <input
+                        type="text"
+                        id="location-input"
+                        name="listing[location]"
+                        class="form-control"
+                        placeholder="Enter location (e.g., Goa, Mumbai)"
+                        required
+                    >
+
+                    <input type="hidden" id="latitude" name="listing[latitude]">
+                    <input type="hidden" id="longitude" name="listing[longitude]">
+
+                    
+                    <button
+                        type="button"
+                        id="search-btn"
+                        class="btn btn-dark"
+                    >
+                        <i class="fa-solid fa-magnifying-glass me-1"></i> Search
+                    </button>
+
+                    <div 
+                        id="map" 
+                        class="rounded border border-secondary-subtle shadow-sm"
+                        style="height: 300px; width: 100%;"
+                        data-lat="<%= listing.geometry.coordinates[1] %>"
+                        data-lng="<%= listing.geometry.coordinates[0] %>"
+                    ></div>
+
+
+                    <div class="valid-feedback">Location looks good!</div>
+                    <div class="invalid-feedback">Location should be valid</div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button class="btn btn-danger btn-lg add-btn fw-bold">Create Listing</button>
+            </div>
+            
+        </form>
+    </div>    
+</div>

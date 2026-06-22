@@ -1,0 +1,183 @@
+/* --- Global Styles --- */
+body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Footer ko bottom mein rakhne ke liye */
+    margin: 0;
+    padding: 0;
+}
+
+/* Page ka main content area */
+.container {
+    flex: 1;
+}
+
+/* --- Navbar Fixes --- */
+.navbar {
+    height: 5rem;
+    background-color: white !important;
+    position: sticky !important;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Halka shadow depth ke liye */
+}
+
+@media (max-width: 991px) {
+    .navbar {
+        position: relative !important; /* Mobile par sticky hat jayega */
+        height: auto !important;      /* Height content ke hisaab se adjust hogi */
+    }
+}
+
+.fa-compass {
+    color: #fe424d;
+    font-size: 2rem;
+}
+
+.nav-link {
+    color: #222222 !important;
+    font-weight: 500;
+}
+
+/* --- Index Page (Cards) --- */
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+    transition: transform 0.2s ease;
+}
+
+/* Card image aur border radius fix */
+.card-img-top {
+    border-radius: 1rem !important; /* Proper rounded corners */
+    width: 100%;
+    object-fit: cover;
+    height: 20rem !important;
+}
+
+.edit-img {
+    width: 200px;
+    height: 200px;
+    filter: blur(1px);
+}
+
+/* Hover Effect Fix (0.2 se 0.8 kiya taaki dikhe) */
+.listing-card:hover .card-img-top {
+    opacity: 0.8 !important;
+    transition: opacity 0.2s ease;
+}
+
+.card-body {
+    padding: 0.5rem 0 !important; /* Side whitespace hatane ke liye */
+}
+
+.card-text b {
+    font-size: 1.05rem;
+}
+
+/* --- Show Page Specific --- */
+.show-img {
+    height: 35vh;
+    border-radius: 1rem;
+    object-fit: cover;
+    width: 100%;
+}
+
+.listing-card {
+    padding: 0 !important;
+    border: none !important;
+}
+
+/* Buttons Alignment */
+.show-btns {
+    width: 100px;           /* Dono ki width fix kar di */
+    height: 40px;          /* Height bhi fix kar di */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;    /* Corners thode round */
+    border: none !important;
+}
+
+.edit-btn {
+    background-color: #fe424d !important;
+}
+
+.delete-btn {
+    background-color: #222222 !important;
+}
+
+.btns {
+    display: flex;
+    gap: 1rem; /* Edit aur Delete ke beech gap */
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.edit-btn, .add-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+    padding: 0.5rem 1.5rem !important;
+    min-width: 80px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* --- Footer (Sticky Bottom Fix) --- */
+footer {
+    margin-top: auto; /* Footer ko hamesha niche rakhta hai */
+    background-color: #ebebeb;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.f-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.f-info-socials {
+    font-size: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.f-info-socials i {
+    cursor: pointer;
+    color: #222222;
+}
+
+.f-info-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+#map {
+    width: 100%;          /* Column ki full width lega */
+    height: 350px;        /* Full screen par height ab bilkul sahi lagegi */
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.leaflet-control-geocoder {
+    z-index: 1000 !important; /* Taki map ke baaki elements ke upar dikhe */
+}
+
+#newMap {
+    height: 400px;
+    width: 100%;
+    border: 1px solid black;
+}

@@ -1,0 +1,175 @@
+<% layout("/layouts/boilerplate") %>
+<script>
+  const coordinates = <%- JSON.stringify(listing.geometry && listing.geometry.coordinates ? listing.geometry.coordinates : [77.2090, 28.6139]) %>;
+  const listingLocation = "<%= listing.location %>";
+  const listingTitle = "<%= listing.title %>";
+</script>
+<div class="row mt-3">
+  <div class="col-10 offset-1 col-md-8 offset-md-2">
+    <h3>Edit Your Listing</h3>
+    <form
+      method="post"
+      action="/listings/<%= listing._id %>?_method=PUT"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
+      <div class="mb-3">
+        <label
+          for="title"
+          class="form-label"
+        >
+          Title
+        </label>
+        <input
+          type="text"
+          value="<%= listing.title %>"
+          name="listing[title]"
+          class="form-control"
+          required
+        />
+        <div class="valid-feedback">Title looks good!</div>
+        <div class="invalid-feedback">Please enter a Title</div>
+      </div>
+
+      <div class="mb-3">
+        <label
+          for="description"
+          class="form-label"
+        >
+          Description
+        </label>
+        <textarea
+          name="listing[description]"
+          class="form-control"
+          required
+        >
+ <%= listing.description %> </textarea
+        >
+        <div class="valid-feedback">Description looks good!</div>
+        <div class="invalid-feedback">Please enter a short description</div>
+      </div>
+
+      <div class="mb-3">
+        Original Listing Image
+        <br />
+        <img
+          src="<%= originalImageUrl %>"
+          class="edit-img"
+          alt="listing_image"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label
+          for="image"
+          class="form-label"
+        >
+          Upload New Image
+        </label>
+        <input
+          type="file"
+          name="listing[image]"
+          class="form-control"
+        />
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label
+            for="price"
+            class="form-label"
+          >
+            Price
+          </label>
+          <input
+            type="number"
+            value="<%= listing.price %>"
+            name="listing[price]"
+            class="form-control"
+            required
+          />
+          <div class="valid-feedback">Price is valid!</div>
+          <div class="invalid-feedback">Price should be valid</div>
+        </div>
+
+        <div class="mb-3 col-md-8">
+          <label
+            for="country"
+            class="form-label"
+          >
+            Country
+          </label>
+          <input
+            type="text"
+            value="<%= listing.country %>"
+            name="listing[country]"
+            class="form-control"
+            required
+          />
+          <div class="valid-feedback">Country looks good!</div>
+          <div class="invalid-feedback">Country name should be valid</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label
+          for="locationInput"
+          class="form-label fw-bold"
+        >
+          Location
+        </label>
+
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            id="location-input"
+            name="listing[location]"
+            class="form-control"
+            value="<%= listing.location %>"
+            required
+          />
+
+          <input
+            type="hidden"
+            id="latitude"
+            name="listing[latitude]"
+          />
+          <input
+            type="hidden"
+            id="longitude"
+            name="listing[longitude]"
+          />
+
+          <button
+            type="button"
+            id="search-btn"
+            class="btn btn-dark"
+          >
+            <i class="fa-solid fa-magnifying-glass me-1"></i>
+            Search
+          </button>
+
+          <div class="valid-feedback">Location looks good!</div>
+          <div class="invalid-feedback">Location should be valid</div>
+        </div>
+
+        <div
+            id="map"
+            class="rounded border border-secondary-subtle shadow-sm"
+            style="height: 300px; width: 100%"
+            data-lat="<%= listing.geometry?.coordinates?.[1] || 28.6139 %>"
+            data-lng="<%= listing.geometry?.coordinates?.[0] || 77.2090 %>"
+        ></div>
+
+      </div>
+
+      <br />
+      <br />
+      <button class="btn btn-dark edit-btn px-3">Edit</button>
+      <br />
+      <br />
+    </form>
+  </div>
+</div>
+<script src="/js/script.js"></script>
