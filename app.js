@@ -1,5 +1,6 @@
 const dns = require('dns');
 dns.setDefaultResultOrder('ipv4first');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 if(process.env.NODE_ENV != "production") {
     require("dotenv").config();
@@ -13,7 +14,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
-// const {MongoStore} = require('connect-mongo');
+const {MongoStore} = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -23,10 +24,7 @@ const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-const Mongo_URL = 'mongodb://127.0.0.1:27017/wanderlust';
-// const dbUrl = process.env.ATLASDB_URL;
-// const dbUrl = 'mongodb://shivamrajput1003379_db_user:HjOnkBVraCsuXs6G@cluster0.z1rktp0.mongodb.net/wanderlust?retryWrites=true&w=majority';
-// console.log(MongoStore);
+const dbUrl = process.env.ATLASDB_URL;
 
 main()
     .then(() => {
@@ -37,8 +35,8 @@ main()
     });
 
 async function main() {
-    await mongoose.connect(Mongo_URL);
-    // await mongoose.connect(dbUrl);
+    console.log("Connecting to:", dbUrl);
+    await mongoose.connect(dbUrl);
 };
 
 
@@ -56,28 +54,27 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-// const store = MongoStore.create({
-//     mongoUrl: Mongo_URL,
-//     crypto: {
-//         secret: "mysupersecretcode"
-//     },
-//     touchAfter: 24 * 3600,
-// });
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 3600,
+});
 
-// store.on("error", (err) => {
-//     console.log("ERROR in MONGO SESSION STORE", err);
-// });
+store.on("error", (err) => {
+    console.log("ERROR in MONGO SESSION STORE", err);
+});
 
 const sessionOptions = {
-    secret: "mysupersecretcode",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie:{
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true
-    },
-    touchAfter: 24 * 3600,
+    }
 };
 
 
