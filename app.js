@@ -101,6 +101,10 @@ app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
 
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
 const validateListing = (req, res, next) => {
     let {error} = listingSchema.validate(req.body);
     if(error) {
